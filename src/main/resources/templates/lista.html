@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <title>Title</title>
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Dados Pessoais</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Endereço</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">RG</th>
+        <th scope="col">Cargo</th>
+        <th scope="col">Logradouro</th>
+        <th scope="col">Complemento</th>
+        <th scope="col">CEP</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">UF</th>
+        <th scope="col">Metodo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cli : ${cliente}">
+        <td><span th:text="${cli.cliente.id}"></span></td>
+        <td><span th:text="${cli.cliente.nome}"></span></td>
+        <td><span th:text="${cli.cliente.cpf}"></span></td>
+        <td><span th:text="${cli.cliente.rg}"></span></td>
+        <td><span th:text="${cli.cliente.cargo}"></span></td>
+        <td><span th:text="${cli.logradouro}"></span></td>
+        <td><span th:text="${cli.complemento}"></span></td>
+        <td><span th:text="${cli.cep}"></span></td>
+        <td><span th:text="${cli.cidade}"></span></td>
+        <td><span th:text="${cli.uf}"></span></td>
+        <td>
+            <button type="submit" class="btn btn-small btn-info">
+                <a th:href="@{/cliente/editar/{id}(id=${cli.id})}">Editar</a>
+            </button>
+            <form th:action="@{/cliente/excluir/{id}(id=${cli.id})}" th:method="delete" style="display: inline-block;">
+                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

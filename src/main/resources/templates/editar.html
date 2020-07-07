@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/cliente/{id} (id=${cliente.id})}" th:object="${cliente}" th:method="put">
+    <div>
+        <label>Codigo</label>
+        <input type="text" th:field="*{id}" required/>
+        <label>Nome</label>
+        <input type="text" th:field="*{nome}" required/>
+
+        <label>CPF</label>
+        <input type="text" th:field="*{cpf}" required/>
+
+        <label>RG</label>
+        <input type="text" th:field="*{rg}" required/>
+
+        <label>Cargo</label>
+        <input type="text" th:field="*{cargo}" required/>
+
+        <button type="submit" class="btn btn-small btn-info">Editar</button>
+    </div>
+</form>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>
