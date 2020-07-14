@@ -9,23 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class EnderecoService {
+public interface EnderecoService {
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
+    public List<Endereco> PegaTodos();
 
-    public List<Endereco> PegaTodos(){
-        return enderecoRepository.findAll();
-    }
-    public Endereco Cadastrar(Endereco endereco){
-        return enderecoRepository.save(endereco);
-    }
+    public Endereco Cadastrar(Endereco endereco);
 
-    public Endereco Update(Endereco endereco){
-        return enderecoRepository.save(endereco);
-    }
-    public Endereco BuscaUm(Integer id){
-        return enderecoRepository.getOne(id);
-    }
+    public Endereco Update(Endereco endereco);
+
+    public Endereco BuscaUm(Integer id);
 }

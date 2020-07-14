@@ -2,32 +2,28 @@ package com.projeto.web.DemoWeb.controller;
 
 import com.projeto.web.DemoWeb.domain.Cliente;
 import com.projeto.web.DemoWeb.domain.Endereco;
-import com.projeto.web.DemoWeb.respository.ClienteRepository;
-import com.projeto.web.DemoWeb.service.ClienteService;
-import com.projeto.web.DemoWeb.service.EnderecoService;
+import com.projeto.web.DemoWeb.service.serviceImpl.ClienteServiceImpl;
+import com.projeto.web.DemoWeb.service.serviceImpl.EnderecoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
 
     @Autowired
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteService;
 
     @Autowired
-    private EnderecoService enderecoService;
+    private EnderecoServiceImpl enderecoService;
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public ModelAndView ListarTodos(Cliente cliente, Endereco endereco) {
-        ModelAndView mv = new ModelAndView("lista");
+        ModelAndView mv = new ModelAndView("cliente/lista");
         endereco.setCliente(cliente);
         List<Endereco> c = enderecoService.PegaTodos();
         mv.addObject("cliente", c);
@@ -36,12 +32,12 @@ public class ClienteController {
 
     @RequestMapping(value = "/cadastro", method = RequestMethod.GET)
     public String CadCliente() {
-        return "/cadastro";
+        return "cliente/cadastro";
     }
 
     @RequestMapping(value = "/cadastro", method = RequestMethod.POST)
     public String CadastroCliente(Endereco endereco, Cliente cliente) {
-        ModelAndView mv = new ModelAndView("lista");
+       // ModelAndView mv = new ModelAndView("cliente/listar");
         endereco.setCliente(cliente);
         clienteService.Cadastrar(cliente);
         enderecoService.Cadastrar(endereco);
@@ -50,12 +46,12 @@ public class ClienteController {
 
     @RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
     public ModelAndView BuscaUpdate(@PathVariable("id") Integer id) {
-        ModelAndView mv = new ModelAndView("editar");
+        ModelAndView mv = new ModelAndView("cliente/editar");
         mv.addObject("cliente", clienteService.BuscaUm(id));
         return mv;
     }
 
-    @PostMapping(value = "{id}")
+    @PutMapping(value = "{id}")
     public ModelAndView update(@PathVariable("id") Integer id, @ModelAttribute("cliente") Cliente cliente) {
         ModelAndView mv = new ModelAndView("redirect:/cliente/listar");
         Cliente findCliente = clienteService.BuscaUm(id);
@@ -71,7 +67,7 @@ public class ClienteController {
         return mv;
     }
 
-    @PostMapping(value = "/excluir/{id}")
+    @DeleteMapping(value = "/excluir/{id}")
     public String remove(@PathVariable("id") Integer id) {
         Cliente cli = clienteService.BuscaUm(id);
         if (cli != null) {
